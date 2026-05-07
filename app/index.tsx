@@ -14,13 +14,13 @@ import { useTheme } from '@/contexts/ThemeContext';
 
 export default function ListPage() {
   const router = useRouter();
-  const { primary } = useTheme();
+  const { primary, colors } = useTheme();
   const { profiles } = useProfiles();
 
   const isEmpty = profiles.length === 0;
 
   return (
-    <SafeAreaView style={styles.container} edges={['bottom']}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]} edges={['bottom']}>
       <TopBar
         title="Perfis"
         large
@@ -33,6 +33,10 @@ export default function ListPage() {
           />
         }
       />
+
+      <View style={styles.themeWrap}>
+        <ThemePicker />
+      </View>
 
       {isEmpty ? (
         <EmptyState primary={primary} onAdd={() => router.push('/add')} />
@@ -47,11 +51,6 @@ export default function ListPage() {
               <Label>
                 {`${profiles.length} ${profiles.length === 1 ? 'perfil salvo' : 'perfis salvos'}`}
               </Label>
-            </View>
-          }
-          ListFooterComponent={
-            <View style={styles.footer}>
-              <ThemePicker />
             </View>
           }
           renderItem={({ item }) => (
@@ -70,7 +69,10 @@ export default function ListPage() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+  },
+  themeWrap: {
+    paddingHorizontal: 16,
+    paddingBottom: 12,
   },
   listContent: {
     paddingHorizontal: 16,
@@ -80,8 +82,5 @@ const styles = StyleSheet.create({
   countWrap: {
     paddingHorizontal: 4,
     paddingBottom: 8,
-  },
-  footer: {
-    paddingTop: 24,
   },
 });

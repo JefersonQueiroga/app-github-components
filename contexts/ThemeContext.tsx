@@ -1,28 +1,57 @@
-// 4.4 Context API — tema (cor primária) compartilhado globalmente.
-import { createContext, ReactNode, useContext, useState } from 'react';
+// 4.4 Context API — tema (claro/escuro + cor primária) compartilhado globalmente.
+import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 
-export const PRIMARY_OPTIONS = [
-  '#006633', // Verde IFRN clássico
-  '#00843D', // Verde mais vivo
-  '#1B4332', // Verde sóbrio
-] as const;
+export type ThemeMode = 'light' | 'dark';
+
+export const THEME_MODES: ThemeMode[] = ['light', 'dark'];
+const PRIMARY = '#006633';
+
+type ThemeColors = {
+  background: string;
+  surface: string;
+  text: string;
+  textMuted: string;
+  border: string;
+  primary: string;
+};
+
+const PALETTES: Record<ThemeMode, ThemeColors> = {
+  light: {
+    background: '#F2F2F7',
+    surface: '#FFFFFF',
+    text: '#000000',
+    textMuted: 'rgba(60,60,67,0.7)',
+    border: 'rgba(60,60,67,0.15)',
+    primary: PRIMARY,
+  },
+  dark: {
+    background: '#000000',
+    surface: '#1C1C1E',
+    text: '#FFFFFF',
+    textMuted: 'rgba(235,235,245,0.6)',
+    border: 'rgba(235,235,245,0.2)',
+    primary: '#2FBF6A',
+  },
+};
 
 type ThemeContextValue = {
+  mode: ThemeMode;
+  setMode: (m: ThemeMode) => void;
+  colors: ThemeColors;
   primary: string;
-  setPrimary: (color: string) => void;
-  options: readonly string[];
 };
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [primary, setPrimary] = useState<string>(PRIMARY_OPTIONS[0]);
+  const [mode, setMode] = useState<ThemeMode>('light');
 
-  return (
-    <ThemeContext.Provider value={{ primary, setPrimary, options: PRIMARY_OPTIONS }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+  const value = useMemo<ThemeContextValue>(() => {
+    const colors = PALETTES[mode];
+    return { mode, setMode, colors, primary: colors.primary };
+  }, [mode]);
+
+  return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
 export function useTheme() {

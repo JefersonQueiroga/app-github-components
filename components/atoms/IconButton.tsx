@@ -1,4 +1,4 @@
-// Atom — botão circular pequeno com ícone (usado no header).
+// ATOM IconButton — botãozinho redondo só com ícone. Útil em headers (ex.: "+" para adicionar).
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet } from 'react-native';
 

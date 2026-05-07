@@ -1,4 +1,4 @@
-// Atom — chip pill clicável (usado nas sugestões).
+// ATOM Chip — pílula clicável usada nas sugestões de username. Só estilo + onPress.
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 type Props = {

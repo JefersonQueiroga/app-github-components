@@ -3,6 +3,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { Button } from '@/components/atoms/Button';
+import { useTheme } from '@/contexts/ThemeContext';
 
 type Props = {
   primary: string;
@@ -10,14 +11,15 @@ type Props = {
 };
 
 export function EmptyState({ primary, onAdd }: Props) {
+  const { colors } = useTheme();
   return (
     <View style={styles.container}>
       <View style={[styles.iconCircle, { backgroundColor: primary, shadowColor: primary }]}>
         <Ionicons name="logo-github" size={64} color="#fff" />
       </View>
       <View style={{ alignItems: 'center' }}>
-        <Text style={styles.title}>Nenhum perfil ainda</Text>
-        <Text style={styles.subtitle}>
+        <Text style={[styles.title, { color: colors.text }]}>Nenhum perfil ainda</Text>
+        <Text style={[styles.subtitle, { color: colors.textMuted }]}>
           Adicione perfis do GitHub pelo username e veja seus dados aqui.
         </Text>
       </View>
@@ -49,12 +51,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#000',
     marginBottom: 6,
   },
   subtitle: {
     fontSize: 15,
-    color: 'rgba(60,60,67,0.7)',
     lineHeight: 21,
     maxWidth: 280,
     textAlign: 'center',

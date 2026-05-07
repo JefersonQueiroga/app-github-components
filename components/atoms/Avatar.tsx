@@ -1,4 +1,4 @@
-// Atom — imagem circular com borda fina.
+// ATOM Avatar — só mostra a foto redonda. Não decide nada, recebe a URL por prop.
 import { Image, StyleSheet } from 'react-native';
 
 type Props = {

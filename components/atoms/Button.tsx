@@ -1,4 +1,4 @@
-// Atom — botão primário sólido com ícone opcional.
+// ATOM Button — botão sólido reaproveitável. A cor e o que ele faz vêm por props.
 import { Ionicons } from '@expo/vector-icons';
 import { Pressable, StyleSheet, Text } from 'react-native';
 
